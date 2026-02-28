@@ -38,9 +38,13 @@ model Property {
   title       String
   description String
   price       Float
+  city        String
+  
   location    String
-
+  phone       String ?
+  email       String ?
   ownerId     String
+  type        String ?
   owner       User      @relation(fields: [ownerId], references: [id])
 
   images      Image[]

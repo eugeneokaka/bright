@@ -90,8 +90,12 @@ export const PropertyScalarFieldEnum = {
   title: 'title',
   description: 'description',
   price: 'price',
+  city: 'city',
   location: 'location',
+  phone: 'phone',
+  email: 'email',
   ownerId: 'ownerId',
+  type: 'type',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -123,4 +127,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
