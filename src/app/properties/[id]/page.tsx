@@ -76,6 +76,9 @@ export default async function PropertyPage({ params }: PageProps) {
             </Link>
           </SignedOut>
           <SignedIn>
+            <Link href="/dashboard" className="bg-brand-yellow text-black px-5 py-2 rounded-full hover:bg-brand-yellow-hover transition-colors font-medium mr-4">
+              Dashboard
+            </Link>
             <Link href="/create-property" className="text-zinc-600 hover:text-black transition-colors mr-2">
               Create Listing
             </Link>
