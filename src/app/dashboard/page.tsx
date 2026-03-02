@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import SiteNav from "@/components/SiteNav";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -55,32 +56,7 @@ export default async function DashboardPage(props: { searchParams: Promise<{ [ke
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-brand-yellow selection:text-black pb-20">
       {/* Navigation */}
-      <nav className="flex items-center justify-between p-6 bg-white sticky top-0 z-50 border-b border-zinc-100">
-        <Link href="/" className="text-2xl font-semibold tracking-tight hover:text-brand-yellow transition-colors">
-          Bright
-        </Link>
-        <div className="flex items-center gap-6 font-medium">
-          <SignedOut>
-            <Link href="/sign-in" className="text-zinc-600 hover:text-black transition-colors">
-              Sign In
-            </Link>
-            <Link href="/sign-up" className="bg-brand-yellow text-black px-5 py-2 rounded-full hover:bg-brand-yellow-hover transition-colors font-medium">
-              Get Started
-            </Link>
-          </SignedOut>
-          <SignedIn>
-            <Link href="/dashboard" className="bg-brand-yellow text-black px-5 py-2 rounded-full hover:bg-brand-yellow-hover transition-colors font-medium mr-4">
-              Dashboard
-            </Link>
-            <Link href="/create-property" className="text-zinc-600 hover:text-black transition-colors mr-2">
-              Create Listing
-            </Link>
-            <UserButton appearance={{
-              elements: { userButtonAvatarBox: "h-9 w-9" }
-            }} />
-          </SignedIn>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main className="max-w-7xl mx-auto px-6 pt-16">
         <div className="mb-12">
