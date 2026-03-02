@@ -1,0 +1,79 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/generated/prisma"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  AGENT
+  ADMIN
+}
+
+model User {
+  id        String @id @default(uuid())
+  clerkId   String @unique
+  firstName String
+  lastName  String
+  email     String @unique
+  role      Role   @default(USER)
+
+  listings Property[]
+  likes    Like[] // 👈 user likes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  onboarded Boolean  @default(false)
+}
+
+model Property {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  city        String
+  location    String
+  phone       String?
+  email       String?
+  ownerId     String
+  type        String?
+
+  // 👇 Engagement
+  views      Int @default(0)
+  likesCount Int @default(0)
+
+  owner  User    @relation(fields: [ownerId], references: [id])
+  images Image[]
+  likes  Like[] // 👈 property likes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Image {
+  id         String @id @default(uuid())
+  url        String
+  propertyId String
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Like {
+  id         String @id @default(uuid())
+  userId     String
+  propertyId String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, propertyId]) // 🚀 prevents duplicate likes
+}

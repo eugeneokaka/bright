@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
+import LikeButton from "@/components/LikeButton";
 
 // Make the route dynamic
 interface PageProps {
@@ -31,6 +33,30 @@ export default async function PropertyPage({ params }: PageProps) {
 
   if (!property) {
     return notFound();
+  }
+
+  const { userId } = await auth();
+
+  // Non-blocking view increment
+  prisma.property.update({
+    where: { id: resolvedParams.id },
+    data: { views: { increment: 1 } },
+  }).catch(console.error);
+
+  let isLiked = false;
+  if (userId) {
+    const dbUser = await prisma.user.findUnique({ where: { clerkId: userId } });
+    if (dbUser) {
+      const like = await prisma.like.findUnique({
+        where: {
+          userId_propertyId: {
+            userId: dbUser.id,
+            propertyId: resolvedParams.id,
+          }
+        }
+      });
+      isLiked = !!like;
+    }
   }
 
   return (
@@ -68,11 +94,19 @@ export default async function PropertyPage({ params }: PageProps) {
               {property.type && <span>{property.type}</span>}
             </div>
             <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">{property.title}</h1>
-            <div className="flex flex-wrap items-center justify-center text-zinc-500 gap-4 text-lg">
+            <div className="flex flex-wrap items-center justify-center text-zinc-500 gap-4 text-lg mb-6">
               <span className="flex items-center font-medium">
                 <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 {property.city}, {property.location}
               </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-4 mt-2">
+              <LikeButton propertyId={property.id} initialLikes={property.likesCount} initialIsLiked={isLiked} isSignedIn={!!userId} />
+              <div className="flex items-center gap-2 px-4 py-2 border border-zinc-200 rounded-full text-zinc-600 bg-white">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                <span className="font-medium">{property.views} {property.views === 1 ? 'View' : 'Views'}</span>
+              </div>
             </div>
           </div>
           <div>

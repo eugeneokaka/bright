@@ -144,6 +144,8 @@ exports.Prisma.PropertyScalarFieldEnum = {
   email: 'email',
   ownerId: 'ownerId',
   type: 'type',
+  views: 'views',
+  likesCount: 'likesCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -151,6 +153,13 @@ exports.Prisma.PropertyScalarFieldEnum = {
 exports.Prisma.ImageScalarFieldEnum = {
   id: 'id',
   url: 'url',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
   propertyId: 'propertyId',
   createdAt: 'createdAt'
 };
@@ -178,7 +187,8 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   Property: 'Property',
-  Image: 'Image'
+  Image: 'Image',
+  Like: 'Like'
 };
 
 /**
