@@ -142,11 +142,10 @@ export default function CreatePropertyPage() {
                   className="w-full px-4 py-3 rounded-md border border-zinc-200 bg-white focus:ring-1 focus:ring-black focus:border-black outline-none transition-colors"
                 >
                   <option value="">Select Type (Optional)</option>
-                  <option value="Apartment">Apartment</option>
-                  <option value="House">House</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Commercial">Commercial</option>
                   <option value="Land">Land</option>
+                  <option value="Property">Property</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Bnd">Bnd</option>
                 </select>
               </div>
             </div>
