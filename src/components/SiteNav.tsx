@@ -10,7 +10,7 @@ export default function SiteNav({ className = "" }: { className?: string }) {
   return (
     <nav className={`flex items-center justify-between p-6 bg-white sticky top-0 z-50 border-b border-zinc-100 ${className}`}>
       <Link href="/" className="text-2xl font-semibold tracking-tight hover:text-brand-yellow transition-colors">
-        Bright
+        Bright Light Homes
       </Link>
       
       {/* Desktop Menu */}
