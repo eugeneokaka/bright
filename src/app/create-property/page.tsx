@@ -95,7 +95,7 @@ export default function CreatePropertyPage() {
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-black">Price ($)</label>
+                <label className="text-sm font-medium text-black">Price (Ksh)</label>
                 <input
                   required
                   type="number"

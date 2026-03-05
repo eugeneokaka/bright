@@ -89,7 +89,7 @@ export default async function PropertyPage({ params }: PageProps) {
             </div>
           </div>
           <div>
-            <div className="text-4xl font-semibold text-black">${property.price.toLocaleString()}</div>
+            <div className="text-4xl font-semibold text-black">Ksh {property.price.toLocaleString()}</div>
           </div>
         </div>
 
@@ -165,9 +165,7 @@ export default async function PropertyPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <button className="w-full py-4 rounded-full bg-black text-white font-medium text-lg hover:bg-zinc-800 transition-colors shadow-sm">
-                Inquire Now
-              </button>
+
             </div>
           </div>
         </div>

@@ -133,7 +133,7 @@ export default async function DashboardPage(props: { searchParams: Promise<{ [ke
                       </div>
                     )}
                     <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm font-semibold border border-zinc-100">
-                      ${property.price.toLocaleString()}
+                      Ksh {property.price.toLocaleString()}
                     </div>
                   </div>
                   
